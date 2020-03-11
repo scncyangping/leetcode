@@ -44,7 +44,8 @@ func canThreePartsEqualSum2(A []int) bool {
 	return false
 }
 
-func canThreePartsEqualSum(A []int) bool {
+// 标定点求值，时间复杂度 O(n)
+func canThreePartsEqualSum3(A []int) bool {
 	if A == nil {
 		return false
 	}
@@ -75,6 +76,36 @@ func canThreePartsEqualSum(A []int) bool {
 			return true
 		}
 		j++
+	}
+	return false
+}
+
+// 双指针判断 时间复杂度最大为O(n)
+func canThreePartsEqualSum(A []int) bool {
+	var sum = 0
+	for i := 0; i < len(A); i++ {
+		sum = sum + A[i]
+	}
+	if sum%3 != 0 {
+		return false
+	}
+	var left = 0
+	var leftSum = A[left]
+	var right = len(A) - 1
+	var rightSum = A[right]
+
+	for left+1 < right {
+		if leftSum == sum/3 && rightSum == sum/3 {
+			return true
+		}
+		if leftSum != sum/3 {
+			left++
+			leftSum += A[left]
+		}
+		if rightSum != sum/3 {
+			right--
+			rightSum += A[right]
+		}
 	}
 	return false
 }
